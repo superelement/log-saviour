@@ -8,7 +8,7 @@
   "noempty": true,
   "nonbsp": true,
   "undef": true,
-  "predef": ["$", "Modernizr"],
+  "predef": ["log", "logArr", "warn", "warnArr"],
   "browser": true,
   "jasmine": true,
   "esversion": 6,

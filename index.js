@@ -25,13 +25,13 @@ function log() {
 function logArr(arr) {
 
   if(arguments.length > 1) {
-    console.warn("'logArr' only supports 1 parameter. Converting to regular 'log'.");
+    if(!suppressWarnings) console.warn("'logArr' only supports 1 parameter. Converting to regular 'log'.");
     log(Array.prototype.slice.call(arguments));
     return;
   }
 
   if(! _.isArray(arr)) {
-    console.warn("'logArr' used, but first argument was not an array. Converting to regular 'log'.");
+    if(!suppressWarnings) console.warn("'logArr' used, but first argument was not an array. Converting to regular 'log'.");
     log(arr);
     return;
   }
@@ -59,13 +59,13 @@ function warn() {
 function warnArr(arr) {
   
   if(arguments.length > 1) {
-    console.warn("'warnArr' only supports 1 parameter. Converting to regular 'warn'.");
+    if(!suppressWarnings) console.warn("'warnArr' only supports 1 parameter. Converting to regular 'warn'.");
     warn(Array.prototype.slice.call(arguments));
     return;
   }
 
   if(! _.isArray(arr)) {
-    console.warn("'warnArr' used, but first argument was not an array. Converting to regular 'warn'.");
+    if(!suppressWarnings) console.warn("'warnArr' used, but first argument was not an array. Converting to regular 'warn'.");
     warn(arr);
     return;
   }
@@ -78,11 +78,19 @@ module.exports = {
         else    NS = ns + ":";
     }
     , setTestMode: function(_log, _warn) {
-      if(typeof _log === "function") testLog = _log;
-      else warn("setTestMode", "'_log' value must be a function");
+      if(typeof _log === "function") {
+        testLog = _log;
+      } else {
+        testLog = null;
+        if(!suppressWarnings) console.warn("setTestMode", "'_log' value must be a function");
+      }
 
-      if(typeof _warn === "function") testWarn = _warn;
-      else warn("setTestMode", "'_warn' value must be a function");
+      if(typeof _warn === "function") {
+        testWarn = _warn;
+      } else {
+        testWarn = null;
+        if(!suppressWarnings) console.warn("setTestMode", "'_warn' value must be a function");
+      }
     }
     , suppressWarnings: function(val) {
         suppressWarnings = val;

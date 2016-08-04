@@ -2,11 +2,11 @@ var sav = require('./index.js')
 
 const NS = "myProject"
 
-sav.setNameSpace(NS)
-warn = sav.warn
-warnArr = sav.warnArr
-log = sav.log
-logArr = sav.logArr
+sav.setNameSpace(NS);
+warn = sav.warn;
+warnArr = sav.warnArr;
+log = sav.log;
+logArr = sav.logArr;
 
 log("Example ", "log ", { a: "that has an object " }, ["and ", "an ", "array."]);
 

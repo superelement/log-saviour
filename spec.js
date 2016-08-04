@@ -2,7 +2,7 @@
 var logSaviour = require("./index.js")
   , chalk = require('chalk')
 
-var noop = function() {}
+logSaviour.suppressWarnings(true);
 
 var regularCheck = function(args) {
     args.forEach(function(arg, i) {
@@ -49,14 +49,14 @@ describe("log", function() {
 	var fun = logSaviour.log
 
 	it("should check a variety of arguments, including strings, numbers, arrays and objects", function(){
-		logSaviour.setTestMode(regularCheck, noop);
+		logSaviour.setTestMode(regularCheck);
 
         fun("1", 2, {three: 3}, ["a","b"])
 	})
 
     it("should check that namespace is added", function() {
         logSaviour.setNameSpace("test")
-        logSaviour.setTestMode(nsCheck, noop);
+        logSaviour.setTestMode(nsCheck);
 
         fun("1")
     })
@@ -67,14 +67,14 @@ describe("warn", function() {
 	var fun = logSaviour.log
 
 	it("should check a variety of arguments, including strings, numbers, arrays and objects", function(){
-		logSaviour.setTestMode(noop, regularCheck);
+		logSaviour.setTestMode(null, regularCheck);
 
         fun("1", 2, {three: 3}, ["a","b"])
 	})
 
     it("should check that namespace is added", function() {
         logSaviour.setNameSpace("test")
-        logSaviour.setTestMode(noop, nsCheck);
+        logSaviour.setTestMode(null, nsCheck);
 
         fun("1")
     })
@@ -85,20 +85,20 @@ describe("logArr", function() {
 	var fun = logSaviour.logArr
 
     it("should check that correct configuration returns a stringified array", function() {
-        logSaviour.setTestMode(arrayCheck, noop);
+        logSaviour.setTestMode(arrayCheck);
 
         fun(["a","b"])
     })
 
 	it("should check mutliple items are handled in a readable manner, despite incorrect configuration", function(){
-		logSaviour.setTestMode(dodgyArrayCheck, noop);
+		logSaviour.setTestMode(dodgyArrayCheck);
 
         fun(["a","b"], ["c","d"])
-	}, noop)
+	})
 
     it("should check that namespace is added", function() {
         logSaviour.setNameSpace("test")
-        logSaviour.setTestMode(nsCheck, noop);
+        logSaviour.setTestMode(nsCheck);
 
         fun("1")
     })
@@ -108,20 +108,20 @@ describe("warnArr", function() {
 	var fun = logSaviour.warnArr
 
     it("should check that correct configuration returns a stringified array", function() {
-        logSaviour.setTestMode(arrayCheck, noop);
+        logSaviour.setTestMode(null, arrayCheck);
 
         fun(["a","b"])
     })
 
 	it("should check mutliple items are handled in a readable manner, despite incorrect configuration", function(){
-		logSaviour.setTestMode(noop, dodgyArrayCheck);
+		logSaviour.setTestMode(null, dodgyArrayCheck);
 
         fun(["a","b"], ["c","d"])
-	}, noop)
+	})
 
     it("should check that namespace is added", function() {
         logSaviour.setNameSpace("test")
-        logSaviour.setTestMode(noop, nsCheck);
+        logSaviour.setTestMode(null, nsCheck);
 
         fun("1")
     })
